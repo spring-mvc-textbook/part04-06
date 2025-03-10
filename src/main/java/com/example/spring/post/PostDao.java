@@ -18,7 +18,7 @@ public class PostDao {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private SqlSession session;
+    private SqlSession sqlSession;
 
     private static final String namespace = "postMapper";
 
@@ -27,7 +27,7 @@ public class PostDao {
         int result = -1;
 
         try {
-            result = session.insert(namespace + ".create", post);
+            result = sqlSession.insert(namespace + ".create", post);
         } catch (DataAccessException e) {
             logger.error("게시글 등록 오류 : {}", e.getMessage(), e);
         }
@@ -40,7 +40,7 @@ public class PostDao {
         List<PostDto> posts = null;
 
         try {
-            posts = session.selectList(namespace + ".list");
+            posts = sqlSession.selectList(namespace + ".list");
         } catch (DataAccessException e) {
             logger.error("게시글 목록 오류 : {}", e.getMessage(), e);
         }
@@ -53,7 +53,7 @@ public class PostDao {
         PostDto post = null;
 
         try {
-            post = session.selectOne(namespace + ".read", id);
+            post = sqlSession.selectOne(namespace + ".read", id);
         } catch (DataAccessException e) {
             logger.error("게시글 보기 오류 : {}", e.getMessage(), e);
         }
@@ -66,7 +66,7 @@ public class PostDao {
         int result = -1;
 
         try {
-            result = session.update(namespace + ".update", post);
+            result = sqlSession.update(namespace + ".update", post);
         } catch (DataAccessException e) {
             logger.error("게시글 수정 오류 : {}", e.getMessage(), e);
         }
